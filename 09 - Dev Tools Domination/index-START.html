@@ -18,29 +18,73 @@
     }
 
     // Regular
-
+    console.log('hello')
+    
     // Interpolated
+    console.log('hello i am a %s string!' , 'wyoo')
 
     // Styled
+    console.log('%c i am some great text', 'font-size:50px; background:red; text-shadow: 10px 10px 0 blue')
 
     // warning!
+    console.warn('oh nooo')
 
     // Error :|
+    console.error('shit')
 
     // Info
+    console.info('這是提示訊息')
 
     // Testing
+    console.assert(1 === 2, '前面錯誤才會顯示')
+
+    const p = document.querySelector('p')
+    console.assert(p.classList.contains('ouch'), '沒這東西')
 
     // clearing
+    // 清理控制台
+    console.clear()
 
     // Viewing DOM Elements
+    //元素本身
+    console.log(p)
+    //元素方法
+    console.dir(p)
 
     // Grouping together
+    //內容分組
+    dogs.forEach(dog => {
+      console.group(`${dog.name}`)
+
+      console.log(`This is ${dog.name}`)
+      console.log(`${dog.name} is ${dog.age} year old`)
+      console.log(`${dog.name} is ${dog.age * 7} years old`)
+      console.groupEnd(`${dog.name}`)
+    })
 
     // counting
-
+    //計算次數
+    console.count('yoo')
+    console.count('yoo')
+    console.count('yoo')
+    console.count('sss')
+    console.count('yoo')
+    console.count('yoo')
+    console.count('yoo')
+    console.count('sss')
+    
     // timing
+    //計算讀取時間
+    console.time('fetching data')
+    fetch('https://api.github.com/users/wesbos')
+      .then(data => data.json())
+      .then(data => {
+        console.timeEnd('fetching data')
+        console.log(data)
+      })
 
+
+    console.table(dogs)
   </script>
 </body>
 </html>

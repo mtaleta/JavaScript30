@@ -59,6 +59,33 @@
 
 <script>
 
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`)
+    if(!audio) return;
+    //先音樂後css效果
+    //設置或返回音頻/視頻播放的當前位置（以秒計）
+    audio.currentTime = 0;
+    audio.play();
+    console.log(key)
+    //為<div>元素添加class:
+    key.classList.add('playing')
+  }
+
+  function removeTransition(e) {
+    console.log(e)
+    if (e.propertyName !== 'transform') return;
+    console.log(e.propertyName)
+    //this此時指向key
+    console.log(this)
+    this.classList.remove('playing')
+  }
+
+  const keys = document.querySelectorAll('.key')
+  //document.addEventListener(event, function, useCapture)
+  //transitionend在CSS 完成後修改<div>樣式及文字：
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition))
+  window.addEventListener('keydown', playSound);
 </script>
 
 

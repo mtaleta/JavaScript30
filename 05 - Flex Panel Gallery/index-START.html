@@ -24,6 +24,8 @@
     .panels {
       min-height:100vh;
       overflow: hidden;
+      /* 轉成直的 */
+      display: flex;
     }
 
     .panel {
@@ -34,6 +36,7 @@
       align-items:center;
       /* Safari transitionend event.propertyName === flex */
       /* Chrome + FF transitionend event.propertyName === flex-grow */
+      /* 轉換動畫 */
       transition:
         font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
         flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
@@ -41,6 +44,15 @@
       font-size: 20px;
       background-size:cover;
       background-position:center;
+
+      /* 平均分配空間 */
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+      /* 從左疊到右 */
+      display: flex;
+      /* 排成列 */
+      flex-direction: column;
     }
 
 
@@ -50,11 +62,26 @@
     .panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
     .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
 
+    /* flex children */
     .panel > * {
       margin:0;
       width: 100%;
       transition:transform 0.5s;
+      border: 1px solid red;
+      /* 均分高度 */
+      flex: 1 0 auto;
+      display: flex;
+      /* 置中 */
+      justify-content: center;
+      align-items: center;
     }
+    /* 第一個孩子y偏移-100% */
+    .panel > *:first-child { transform: translateY(-100%)}
+    /* class為open-active時會回到原處 */
+    .panel.open-active > *:first-child { transform: translateY(0)}
+
+    .panel > *:last-child { transform: translateY(100%)}
+    .panel.open-active > *:last-child { transform: translateY(0)}
 
     .panel p {
       text-transform: uppercase;
@@ -67,6 +94,8 @@
     }
 
     .panel.open {
+      /* 得到5的空間 */
+      flex: 5;
       font-size:40px;
     }
 
@@ -102,6 +131,28 @@
   </div>
 
   <script>
+    const panels = document.querySelectorAll('.panel')
+
+    function toggleOpen() {
+      console.log('hello')
+      this.classList.toggle('open')
+    }
+
+    function toggleActive(e) {
+      //太多個這樣太麻煩
+      // this.classList.toggle('open-active')
+      // 有什麼改變了
+      console.log(e.propertyName)
+      //includes是否包含傳入的字串
+      if(e.propertyName.includes('flex')) {
+        // toggle(class, true|false)	在元素中切。
+        this.classList.toggle('open-active')
+      }
+    }
+
+    panels.forEach(panel => panel.addEventListener('click', toggleOpen))
+
+    panels.forEach(panel => panel.addEventListener('transitionend', toggleActive))
 
   </script>
 
