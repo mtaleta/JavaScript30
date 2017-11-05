@@ -57,7 +57,32 @@
         if (callNow) func.apply(context, args);
       };
     }
+    //選取所有的圖片
+    const sliderImages = document.querySelectorAll('.slide-in')
 
+    function checkSlide(e) {
+      //計算滾動長度
+      console.log(window.scrollY)
+      // console.count(e)  計算移動次數
+      sliderImages.forEach(sliderImage => {
+        //計算瀏覽器高度+滾動長度 - 圖片高/2 = 圖片高度一半到瀏覽器頂端距離
+        const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2
+        // console.log(slideInAt)
+        //offsetTop能得到從瀏覽器頂端到圖片的頂端距離 + 圖片高度 = 圖片底部到瀏覽器高的長
+        const imageBottom = sliderImage.offsetTop + sliderImage.height
+        //圖片高度一半大於圖片頂端距離
+        const isHalfShown = slideInAt > sliderImage.offsetTop
+        //y軸高度小於高度一半
+        const isNotScrolledPast = window.scrollY < imageBottom
+        if(isHalfShown && isNotScrolledPast) {
+          sliderImage.classList.add('active')
+        } else {
+          sliderImage.classList.remove('active')
+        }
+      })
+    }
+
+    window.addEventListener('scroll', debounce(checkSlide))
   </script>
 
   <style>

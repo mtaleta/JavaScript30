@@ -7,6 +7,28 @@
 </head>
 <body>
 <script>
+  // 監聽到瀏覽器上的鍵盤輸入並log出來
+  // window.addEventListener('keyup', (e) => {
+  //   console.log(e.key);
+  // })
+  
+  const pressed =[]
+  const secretCode = 'wesbos'
+  
+  window.addEventListener('keyup', (e) => {
+    console.log(e.key)
+    pressed.push(e.key)
+    //arrayObject.splice(index,howmany,item1,.....,itemX)
+    //index:整數，規定添加/刪除項目的位置，使用負數可從數組結尾處規定位置
+    //howmany:要刪除的項目數量。如果設置為 0，則不會刪除項目。
+    //從最後一個字開始往前找起,確切數量為陣列長度剪掉自行設定的數值
+    pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length)
+    if(pressed.join('').includes(secretCode)) {
+      console.log('DING DING!')
+      cornify_add()
+    }
+    console.log(pressed)
+  })
 </script>
 </body>
 </html>
