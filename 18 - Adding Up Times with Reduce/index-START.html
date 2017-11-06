@@ -182,6 +182,29 @@
     </li>
   </ul>
 <script>
+
+  //data-time是nodelist所以要加上array.from或[...doc]去轉換成陣列
+  const timeNodes = Array.from(document.querySelectorAll('[data-time]'))
+
+  const seconds = timeNodes
+    .map(node => node.dataset.time)
+    //計算總秒數,先拆時跟秒
+    .map(timeCode => {
+      //map(parseFloat)時間本來是字串改成浮動的可以去掉開頭為0的分
+      const [mins, secs] = timeCode.split(':').map(parseFloat)
+      console.log(mins, secs)
+      return (mins * 60) + secs
+    })
+    .reduce((total, vidSeconds) => total + vidSeconds)
+
+    let secondsLeft = seconds
+    const hours = Math.floor(secondsLeft / 3600)
+    secondsLeft = secondsLeft % 3600
+
+    const mins = Math.floor(secondsLeft / 60)
+    secondsLeft = secondsLeft % 60
+
+    console.log(hours, mins, secondsLeft)
 </script>
 </body>
 </html>
